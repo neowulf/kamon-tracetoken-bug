@@ -1,0 +1,28 @@
+<configuration scan="true" scanPeriod="5 seconds" debug="false" packagingDate="true">
+
+    <conversionRule conversionWord="traceToken" converterClass="io.kamon.sample.CustomLogbackTraceTokenConverter" />
+
+    <property name="LOG_ENCODER_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} %X{akkaTimestamp} [%traceToken] - %msg%n"
+    />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+        ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>${LOG_ENCODER_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender" queueSize="512">
+        <appender-ref ref="CONSOLE"/>
+    </appender>
+
+    <!--http://stackoverflow.com/a/6702128/1216965-->
+    <root level="INFO">
+        <!--<appender-ref ref="CONSOLE"/>-->
+
+        <appender-ref ref="ASYNC_CONSOLE"/>
+    </root>
+
+</configuration>
