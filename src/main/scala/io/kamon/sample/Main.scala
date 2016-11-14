@@ -38,21 +38,6 @@ class HttpRequestHandler(routes: Route) extends HttpServiceActor with ActorLoggi
   override def receive: Receive = runRoute(routes)
 }
 
-/**
-  * This is a copy
-  *
-  * @see kamon.trace.logging.LogbackTraceTokenConverter
-  */
-class CustomLogbackTraceTokenConverter extends LogbackTraceTokenConverter {
-
-  override def convert(event: ILoggingEvent): String = {
-
-    println(event.getMDCPropertyMap)
-    super.convert(event)
-  }
-}
-
-
 object Main extends App {
 
   implicit val system = ActorSystem("kamon")
